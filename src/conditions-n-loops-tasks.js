@@ -170,8 +170,66 @@ function convertToRomanNumerals(num) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    const char = numberStr[i];
+    let word = '';
+
+    switch (char) {
+      case '0':
+        word = 'zero';
+        break;
+      case '1':
+        word = 'one';
+        break;
+      case '2':
+        word = 'two';
+        break;
+      case '3':
+        word = 'three';
+        break;
+      case '4':
+        word = 'four';
+        break;
+      case '5':
+        word = 'five';
+        break;
+      case '6':
+        word = 'six';
+        break;
+      case '7':
+        word = 'seven';
+        break;
+      case '8':
+        word = 'eight';
+        break;
+      case '9':
+        word = 'nine';
+        break;
+      case '.':
+        word = 'point';
+        break;
+      case ',':
+        word = 'point';
+        break;
+      case '-':
+        word = 'minus';
+        break;
+      default:
+        break;
+    }
+
+    if (word) {
+      result += word;
+    }
+    if (i < numberStr.length - 1) {
+      result += ' ';
+    }
+  }
+
+  return result;
 }
 
 /**
@@ -393,13 +451,33 @@ function rotateMatrix(matrix) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 
-function simpleSort(arr) {
-  arr.sort((a, b) => a - b);
-}
-
 function sortByAsc(arr) {
-  const newArr = simpleSort(arr);
-  return newArr;
+  const copy = arr;
+  function qs(ar) {
+    if (ar.length <= 1) {
+      return ar;
+    }
+    const pivot = ar[Math.floor(ar.length / 2)];
+    const left = [];
+    const right = [];
+    const eq = [];
+    for (let i = 0; i < ar.length; i += 1) {
+      if (ar[i] < pivot) {
+        left[left.length] = ar[i];
+      }
+      if (ar[i] > pivot) {
+        right[right.length] = ar[i];
+      }
+      if (ar[i] === pivot) {
+        eq[eq.length] = ar[i];
+      }
+    }
+    return [...qs(left), ...eq, ...qs(right)];
+  }
+  const sorted = qs(copy);
+  for (let i = 0; i < copy.length; i += 1) {
+    copy[i] = sorted[i];
+  }
 }
 
 /**
@@ -419,9 +497,29 @@ function sortByAsc(arr) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+
+function shuffle(str) {
+  const result = str.split('');
+  let temp = '';
+  for (let i = 0; i < result.length; i += 1) {
+    if (i % 2 !== 0 && result[i]) {
+      temp += result[i];
+      delete result[i];
+    }
+  }
+
+  return result.join('') + temp;
 }
+function shuffleChar(str, iterations) {
+  let res = str;
+
+  for (let j = 0; j < iterations; j += 1) {
+    res = shuffle(res);
+  }
+
+  return res;
+}
+
 /**
  * Returns the nearest largest integer consisting of the digits of the given positive integer.
  * If there is no such number, it returns the original number.
