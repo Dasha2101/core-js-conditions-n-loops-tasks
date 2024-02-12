@@ -358,8 +358,24 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const n = matrix.length;
+  const rotatedMatrix = [...matrix];
+  for (let i = 0; i < n; i += 1) {
+    for (let j = i + 1; j < n; j += 1) {
+      const temp = rotatedMatrix[i][j];
+      rotatedMatrix[i][j] = rotatedMatrix[j][i];
+      rotatedMatrix[j][i] = temp;
+    }
+  }
+  for (let i = 0; i < n; i += 1) {
+    for (let j = 0; j < n / 2; j += 1) {
+      const temp = rotatedMatrix[i][j];
+      rotatedMatrix[i][j] = rotatedMatrix[i][n - 1 - j];
+      rotatedMatrix[i][n - 1 - j] = temp;
+    }
+  }
+  return rotatedMatrix;
 }
 
 /**
@@ -376,8 +392,14 @@ function rotateMatrix(/* matrix */) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+
+function simpleSort(arr) {
+  arr.sort((a, b) => a - b);
+}
+
+function sortByAsc(arr) {
+  const newArr = simpleSort(arr);
+  return newArr;
 }
 
 /**
@@ -400,7 +422,6 @@ function sortByAsc(/* arr */) {
 function shuffleChar(/* str, iterations */) {
   throw new Error('Not implemented');
 }
-
 /**
  * Returns the nearest largest integer consisting of the digits of the given positive integer.
  * If there is no such number, it returns the original number.
